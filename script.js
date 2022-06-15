@@ -249,18 +249,12 @@ function updateReportCard(reportCardTableElement, currentSemester) {
   // now fill it up again
   addReportCardHeaders(reportCardTableElement)
   var row = 0
-  studentData["Spring Semester"].forEach(course => {
+
+  studentData[currentSemester].forEach(course => {
     addCourseRowToReportCard(reportCardTableElement, course, row)
     row += 1
   })
-  studentData["Fall Semester"].forEach(course => {
-    addCourseRowToReportCard(reportCardTableElement, course, row)
-    row += 1
-  })
-  studentData["Winter Term"].forEach(course => {
-    addCourseRowToReportCard(reportCardTableElement, course, row)
-    row += 1
-  })
+
   addTotalsRow(reportCardTableElement)
   addGpaRow(reportCardTableElement)
   calculateSemesterGpa(reportCardTableElement)
@@ -372,7 +366,7 @@ function addUpStudentCredits(reportCardTableElement) {
 
 function calculateSemesterGpa(reportCardTableElement) {
   var pointElement
-  var len = studentData["Fall Semester"].length + studentData["Spring Semester"].length + studentData["Winter Term"].length
+  var len = studentData[semester].length
   var totalPoints = 0
   for (let i = 1; i <= len; i++){
     pointElement = document.getElementById("gpa-" + i)
@@ -391,5 +385,5 @@ window.onload = function () {
   // execute your functions here to make sure they run as soon as the page loads
   populateStudentInfo(studentInformation)
   addEventListeners(dropdownElement, dropdownButtonElement, reportCardTableElement, fallSemesterElement, springSemesterElement, winterTermElement)
-  updateReportCard(reportCardTableElement)
+  updateReportCard(reportCardTableElement, semester)
 }
